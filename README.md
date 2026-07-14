@@ -30,9 +30,9 @@ script in this repository calls cflib.)
 
 The work spans three phases:
 
-* **Phase 0 — Single drone (LPS / Crazyradio):** seven autonomous
+* **Phase 0 — Single drone (LPS / Crazyradio):** eight autonomous
   trajectories (simple launch, circle, square, parabola, figure-8, hexagon,
-  spiral), each flown in simulation and on real hardware, plus the circle
+  spiral, triangle), each flown in simulation and on real hardware, plus the circle
   PID tuning study (`circle_path_node.py` v1→v5 preserves the full tuning
   lineage: 35 cm → 24 cm mean error).
 * **Phase 1 — Multi-agent LPS swarm:** five synchronized two-drone behaviors
@@ -103,6 +103,18 @@ deck.
 
 ![Phantom drift of a stationary drone without positioning](docs/phantom_drift.png)
 
+## New student? Start here
+
+**[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)** takes you from a
+blank Windows laptop to flying this repository — Ubuntu 22.04 dual-boot,
+ROS 2 Humble installation, a one-page ROS 2 crash course built around this
+repo's exact patterns, Crazyswarm2 workspace setup, firmware toolchain,
+the hardware explained (LPS, AI-deck, CPX, why positioning is mandatory),
+simulation setup, a week-by-week learning path through the code, and a
+glossary. Combined with [TROUBLESHOOTING.md](TROUBLESHOOTING.md) and
+[docs/FLIGHT_RUNBOOK.md](docs/FLIGHT_RUNBOOK.md), this repository is a
+self-contained onboarding for whoever continues the work.
+
 ## Simulation parity (`/sim`)
 
 Native multicopter Gazebo physics plugins crashed with multiple drone
@@ -141,8 +153,9 @@ sim/                    custom Gazebo Fortress simulation: kinematic sim
                         servers (single + swarm), lab worlds, drone models
 tools/                  find_decks.sh (AI-deck discovery + port probe),
                         use_single_drone.sh / use_swarm.sh (yaml switchers)
-docs/                   flight-day floor plans (2D/3D), phantom-drift figure,
-                        flight runbook, PROJECT_NOTES.md (author's own notes)
+docs/                   GETTING_STARTED.md (zero-to-flying onboarding),
+                        flight runbook, floor plans (2D/3D), phantom-drift
+                        figure, PROJECT_NOTES.md (author's own notes)
 ```
 
 ## Quickstart (Phase 2, dual-stack configuration)
@@ -207,5 +220,6 @@ His insistence on honest, measured results over comfortable claims taught
 me more about engineering discipline than any course has, and the standard
 he holds his lab to is one I will carry with me. It was a privilege to
 spend a summer building under his guidance at the IRAS Hub.
+
 
 — Kaustubh Sharma, IIIT-Delhi, July 2026
