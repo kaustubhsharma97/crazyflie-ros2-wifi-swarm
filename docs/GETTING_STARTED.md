@@ -34,7 +34,10 @@ Wi-Fi credentials.
 6. Reboot. The purple **GRUB** menu now offers Ubuntu or Windows at every
    power-on. Pick Ubuntu.
 
-   https://releases.ubuntu.com/jammy/
+## Important Links
+
+   (i).https://releases.ubuntu.com/jammy/
+   (ii).https://etcher.balena.io/#download-etcher
 
 ## 2. First-boot essentials
 
