@@ -98,6 +98,7 @@ believing it moved 11.3 m in 1.9 s (≈ 6 m/s phantom velocity). Every
 positioning-free flight attempt confirmed this (3 controlled crashes).
 Bitcraze's own AI-deck Wi-Fi flight example likewise requires a positioning
 deck.
+![Phantom drift of a stationary drone without positioning](docs/phantom_drift.png)
 
 ## Repository layout
 
