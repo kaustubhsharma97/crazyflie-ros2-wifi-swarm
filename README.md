@@ -58,6 +58,7 @@ in any flight code. The work spans three phases:
 | **Wi-Fi-only control (no Crazyradio)** | both drones connected via `tcp://<deck-ip>:5000` through Crazyswarm2's cflib backend; pose telemetry verified stable at 10 Hz |
 | Leader–follower over Wi-Fi | fixed-offset trailing, 3 selectable trajectories, watchdog failsafe (follower lands itself on leader loss), room safe-zone clamping |
 | Troubleshooting knowledge base | 10+ root-caused failures documented in [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
+![Circle tracking error analysis — real hardware](results/real/circle_trajectory_error_analysis.png)
 
 ---
 
@@ -123,6 +124,8 @@ tools/                  find_decks.sh (AI-deck discovery + port probe),
                         use_single_drone.sh / use_swarm.sh (yaml switchers)
 docs/                   flight-day floor plans (2D/3D), phantom-drift figure,
                         flight runbook, PROJECT_NOTES.md (author's own notes)
+results/                real-hardware CSV logs + analysis plots (trajectories,
+                        swarm, follow-me) and their simulation counterparts
 ```
 
 ## Quickstart (Phase 2, dual-stack configuration)
