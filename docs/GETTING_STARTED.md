@@ -11,7 +11,7 @@ Wi-Fi credentials.
 
 ---
 
-## 1. Install Ubuntu 22.04 (dual boot with Windows)
+## 1. Install Ubuntu 22.04.5 LTS(Jammy Jellifish) (dual boot with Windows)
 
 1. On Windows, download the **Ubuntu 22.04.x Desktop ISO** from ubuntu.com
    and **balenaEtcher**. Flash the ISO to an 8 GB+ USB stick with Etcher.
@@ -33,6 +33,8 @@ Wi-Fi credentials.
    path.
 6. Reboot. The purple **GRUB** menu now offers Ubuntu or Windows at every
    power-on. Pick Ubuntu.
+
+   https://releases.ubuntu.com/jammy/
 
 ## 2. First-boot essentials
 
