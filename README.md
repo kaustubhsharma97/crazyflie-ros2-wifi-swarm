@@ -51,7 +51,7 @@ The work spans three phases:
 
 | Result | Detail |
 |---|---|
-| 7 trajectories flown on real hardware | simple, circle, square, parabola, figure-8, hexagon, spiral (sim + real) |
+| 8 trajectories flown on real hardware | simple, circle, square, parabola, figure-8, hexagon, spiral (sim + real), triangle |
 | Circle tracking error 35 cm → **24 cm** | Position-P = 3.0, rim-entry start, R = 0.8 m, ω = 0.5 rad/s; system shown to be **positioning-noise-limited** (TDoA2 floor ≈ 10–15 cm), not gain-limited |
 | 5 two-drone swarm behaviors | formation hold, leader–follower, synchronized 180° phase, formation flight, concentric circles |
 | Follow-me | drone follows a hand-carried Crazyflie used as a live LPS tag |
