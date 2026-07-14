@@ -1,0 +1,50 @@
+# crazyflies_dual_wifi.yaml — FULLY DONGLE-FREE: LPS+AI stacked on BOTH drones
+# LEADER   cf231 = drone 04: LPS + AI-deck stacked, Wi-Fi link, gets trajectory
+# FOLLOWER cf2   = drone 03: LPS + AI-deck stacked, Wi-Fi link, follows the
+#                            leader's measured position received over Wi-Fi
+# Server: ros2 launch crazyflie launch.py backend:=cflib mocap:=False
+# (cflib backend handles radio:// and tcp:// in the same session)
+
+fileversion: 3
+
+robots:
+  cf231:
+    enabled: true
+    uri: tcp://192.168.0.20:5000         # drone 04, LPS+AI stacked, Wi-Fi link
+    initial_position: [0.0, 0.0, 0.0]
+    type: cf21
+  cf2:
+    enabled: true
+    uri: tcp://192.168.0.28:5000         # drone 03, LPS+AI stacked, Wi-Fi link
+    initial_position: [1.5, 0.0, 0.0]
+    type: cf21
+
+robot_types:
+  cf21:
+    motion_capture:
+      tracking: "librigidbodytracker"
+      marker: default_single_marker
+      dynamics: default
+    big_quad: false
+    battery:
+      voltage_warning: 3.8
+      voltage_critical: 3.7
+
+all:
+  firmware_logging:
+    enabled: true
+    default_topics:
+      pose:
+        frequency: 10
+      status:
+        frequency: 1
+  firmware_params:
+    commander:
+      enHighLevel: 1
+    stabilizer:
+      estimator: 2            # Kalman required for LPS
+      controller: 1
+    locSrv:
+      extPosStdDev: 1e-3
+      extQuatStdDev: 0.5e-1
+  reference_frame: "world"

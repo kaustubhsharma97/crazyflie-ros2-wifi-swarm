@@ -1,0 +1,41 @@
+# crazyflies.yaml  —  Crazyswarm2 / ROS2 Humble
+# Kaustubh Sharma | Summer Intern, IIIT Delhi (Prof. Sanjit Kaul)
+# Lab: B-419, IRAS Hub (Robotics Lab), IIIT-Delhi
+# Drone: Crazyflie 2.1 (cf231) | Positioning: Loco Positioning System (LPS), TDoA2
+#
+# Anchor positions are calibrated in cfclient (LPS node firmware), not here.
+
+robots:
+  cf231:
+    enabled: true
+    uri: radio://0/80/2M/E7E7E7E711
+    initial_position: [1.5, 2.0, 0.0]
+    type: cf21
+
+# REQUIRED by the crazyswarm2 parser (absence causes the 'enabled' KeyError)
+all_robots:
+  enabled: false
+
+robot_types:
+  cf21:
+    motion_capture:
+      enabled: false          # no MoCap — using LPS
+      type: "none"
+    bb_min: [-0.05, -0.05, -0.05]
+    bb_max: [ 0.05,  0.05,  0.05]
+    firmware_params:
+      kalman:
+        estimator: 2          # 2 = Kalman filter (required for LPS)
+      loco:
+        mode: 1               # 1 = TDoA2 (matches your reflashed anchors)
+    # ── FIX FOR THE FREEZE ────────────────────────────────────────────────────
+    # The server source (crazyflie_server.cpp:421 / crazyflie_server.py:378)
+    # reads firmware_logging.default_topics.pose.frequency. Without this block
+    # /cf231/pose is advertised but never publishes data, so the rclpy scripts
+    # hang forever in WAIT_POSE. This publishes geometry_msgs/PoseStamped on
+    # /cf231/pose at 10 Hz from the Kalman state estimate.
+    firmware_logging:
+      enabled: true
+      default_topics:
+        pose:
+          frequency: 10       # Hz

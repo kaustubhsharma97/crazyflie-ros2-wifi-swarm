@@ -1,0 +1,56 @@
+# crazyflies_swarm.yaml — TWO-DRONE swarm (crazyswarm2 / ROS2 Humble)
+# Kaustubh Sharma | IIIT-Delhi (Prof. Sanjit Kaul) | Lab B-419
+# Crazyflie 2.1+ x2 | LPS TDoA2 | ONE Crazyradio (both on channel 80)
+#
+# Two drones share one dongle: SAME channel/datarate (0/80/2M),
+# DIFFERENT address (E5 vs 02).
+#   cf231 (yours)      = radio://0/80/2M/E7E7E7E7E5   (ends E5)
+#   cf2   (mate's)     = radio://0/80/2M/E7E7E7E701   (ends 02)
+
+fileversion: 3
+
+robots:
+  cf231:
+    enabled: true
+    uri: radio://0/80/2M/E7E7E7E7E5      # YOUR drone (ends E5)
+    initial_position: [0.0, 0.0, 0.0]
+    type: cf21
+  cf2:
+    enabled: true
+    uri: radio://0/80/2M/E7E7E7E711      # MATE'S drone (ends 11)
+    initial_position: [1.5, 0.0, 0.0]    # 1.5 m apart from cf231 in X
+    type: cf21
+
+robot_types:
+  cf21:
+    motion_capture:
+      tracking: "librigidbodytracker"  # matches lab's working YAML; mocap node disabled via mocap:=False
+      marker: default_single_marker
+      dynamics: default
+    big_quad: false
+    battery:
+      voltage_warning: 3.8    # V
+      voltage_critical: 3.7   # V
+
+# Global settings for ALL drones (matches lab's proven swarm approach)
+all:
+  firmware_logging:
+    enabled: true
+    default_topics:
+      pose:
+        frequency: 10         # Hz — publishes /cf231/pose AND /cf2/pose
+      status:
+        frequency: 1          # Hz — battery on /cf231/status, /cf2/status
+  firmware_params:
+    commander:
+      enHighLevel: 1          # high-level commander (takeoff/goto/land)
+    stabilizer:
+      estimator: 2            # 2 = Kalman (required for LPS)
+      controller: 1           # 1 = PID (matches your single-drone work + tuning)
+    locSrv:
+      extPosStdDev: 1e-3
+      extQuatStdDev: 0.5e-1
+  reference_frame: "world"
+  broadcasts:
+    num_repeats: 15
+    delay_between_repeats_ms: 1

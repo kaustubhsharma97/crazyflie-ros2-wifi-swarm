@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <model name="crazyflie_sim_blue">
+    <pose>0 0 0 0 0 0</pose>
+    <!-- static=false so set_pose can move it; no physics plugins needed -->
+
+    <link name="base_link">
+      <inertial>
+        <mass>0.027</mass>
+        <inertia>
+          <ixx>1.657e-5</ixx><iyy>1.657e-5</iyy><izz>2.9e-5</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <!-- Body -->
+      <visual name="body_visual">
+        <geometry><box><size>0.092 0.092 0.029</size></box></geometry>
+        <material>
+          <ambient>0.0 0.3 0.9 1</ambient>
+          <diffuse>0.0 0.3 0.9 1</diffuse>
+        </material>
+      </visual>
+
+      <!-- Front propellers (green) -->
+      <visual name="prop_fl">
+        <pose>0.033 0.033 0.015 0 0 0</pose>
+        <geometry><cylinder><radius>0.023</radius><length>0.002</length></cylinder></geometry>
+        <material><ambient>0 0.8 0 1</ambient><diffuse>0 0.8 0 1</diffuse></material>
+      </visual>
+      <visual name="prop_fr">
+        <pose>0.033 -0.033 0.015 0 0 0</pose>
+        <geometry><cylinder><radius>0.023</radius><length>0.002</length></cylinder></geometry>
+        <material><ambient>0 0.8 0 1</ambient><diffuse>0 0.8 0 1</diffuse></material>
+      </visual>
+      <!-- Rear propellers (red) -->
+      <visual name="prop_rl">
+        <pose>-0.033 0.033 0.015 0 0 0</pose>
+        <geometry><cylinder><radius>0.023</radius><length>0.002</length></cylinder></geometry>
+        <material><ambient>0.8 0 0 1</ambient><diffuse>0.8 0 0 1</diffuse></material>
+      </visual>
+      <visual name="prop_rr">
+        <pose>-0.033 -0.033 0.015 0 0 0</pose>
+        <geometry><cylinder><radius>0.023</radius><length>0.002</length></cylinder></geometry>
+        <material><ambient>0.8 0 0 1</ambient><diffuse>0.8 0 0 1</diffuse></material>
+      </visual>
+    </link>
+  </model>
+</sdf>

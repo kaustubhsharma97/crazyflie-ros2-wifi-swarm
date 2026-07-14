@@ -1,0 +1,37 @@
+TWO-DRONE GAZEBO SIM — FIXED (no physics-plugin crash)
+======================================================
+The crash was caused by the original crazyflie model's multicopter plugins
+(rotorConfiguration) when TWO drones loaded. These lightweight visual-only
+models fix it — the sim server moves drones via set_pose (kinematic), so no
+motor physics is needed.
+
+INSTALL
+-------
+1. World (both drones, lightweight models):
+   cp worlds/cf_lab.sdf ~/gazebo_sim/worlds/cf_lab.sdf
+
+2. Add the two visual-only models:
+   cp -r models/crazyflie_sim      ~/gazebo_sim/models/crazyflie_sim
+   cp -r models/crazyflie_sim_blue ~/gazebo_sim/models/crazyflie_sim_blue
+
+3. Sim server (if not already):
+   cp cf_sim_server_swarm.py ~/gazebo_sim/scripts/
+
+RUN (use your normal launch method that sets the model path)
+------------------------------------------------------------
+Terminal 1:
+   bash ~/gazebo_sim/launch_sim.sh
+   (OR: ros2 launch ~/gazebo_sim/launch/gazebo_sim_launch.py)
+   -> you should see cf231 (black) and cf2 (blue), no crash
+
+Terminal 2:
+   cd ~/gazebo_sim/scripts && python3 cf_sim_server_swarm.py
+   -> "Drones: ['cf231', 'cf2'] ... ready"
+
+Terminal 3:
+   ros2 topic hz /cf231/pose
+   ros2 topic hz /cf2/pose
+   python3 ~/gazebo_sim/scripts/swarm_formation_hold.py   # CSV + PNG auto
+
+NOTE: cf231 keeps the original (physics) model ONLY in your single-drone world.
+This swarm world uses the visual-only models to avoid the two-drone plugin crash.

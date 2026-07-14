@@ -1,0 +1,64 @@
+# crazyflies.yaml — TWO-DRONE swarm, AI-DECK PHASE (crazyswarm2 / ROS2 Humble)
+# Kaustubh Sharma | IIIT-Delhi (Prof. Sanjit Kaul) | Lab B-419
+# Crazyflie 2.1+ x2 | AI-deck (Wi-Fi) — LPS deck REMOVED
+# ONE Crazyradio (both on channel 80), DIFFERENT addresses (03 vs 04).
+#
+#   cf231 (leader)   = radio://0/80/2M/E7E7E7E703   (ends 03)
+#   cf2   (follower) = radio://0/80/2M/E7E7E7E704   (ends 04)
+#
+# IMPORTANT — positioning changed with the deck swap:
+#  * No LPS = no shared world frame. With Flow deck v2 (required for
+#    position hold!), each drone's origin is ITS OWN takeoff point.
+#  * Consequence for leader_follower scripts: run with -p offset_x:=0.0
+#    and create the separation by PHYSICAL PLACEMENT of the follower
+#    (e.g. 0.8 m behind the leader). Each drone flies the trajectory in
+#    its own frame; placement provides the world-space offset.
+#  * Kalman estimator (2) stays — it fuses the Flow deck.
+
+fileversion: 3
+
+robots:
+  cf231:
+    enabled: true
+    uri: tcp://192.168.0.44:5000         # LEADER — aideck-7BD624 (VERIFY which
+                                         # physical drone this is via console!)
+    initial_position: [0.0, 0.0, 0.0]
+    type: cf21
+  cf2:
+    enabled: true
+    uri: tcp://192.168.0.XX:5000         # FOLLOWER — fill in aideck-779264's IP
+                                         # once its WiFi firmware is fixed
+    initial_position: [1.5, 0.0, 0.0]
+    type: cf21
+
+robot_types:
+  cf21:
+    motion_capture:
+      tracking: "librigidbodytracker"  # keep all three keys: launch parser
+      marker: default_single_marker    # KeyErrors on any missing one
+      dynamics: default                # (run with mocap:=False as before)
+    big_quad: false
+    battery:
+      voltage_warning: 3.8    # V
+      voltage_critical: 3.7   # V
+
+# Global settings for ALL drones
+all:
+  firmware_logging:
+    enabled: true
+    default_topics:
+      pose:
+        frequency: 10         # Hz — /cf231/pose and /cf2/pose (onboard Kalman)
+      status:
+        frequency: 1          # Hz — battery on /cf231/status, /cf2/status
+  firmware_params:
+    commander:
+      enHighLevel: 1          # high-level commander (takeoff/goto/land)
+    stabilizer:
+      estimator: 2            # Kalman — now fusing Flow deck instead of LPS
+      controller: 1           # PID (matches all prior tuning)
+    # locSrv extPosStdDev/extQuatStdDev removed — those tuned the EXTERNAL
+    # position input (LPS/mocap); there is no external positioning anymore.
+  reference_frame: "world"
+  # 'broadcasts' block removed — that is a Crazyradio mechanism; links are
+  # now per-drone TCP over Wi-Fi (server must be launched with backend:=cflib)
