@@ -208,12 +208,4 @@ me more about engineering discipline than any course has, and the standard
 he holds his lab to is one I will carry with me. It was a privilege to
 spend a summer building under his guidance at the IRAS Hub.
 
-Thanks also to my PhD mentor in the lab for hardware judgment at exactly
-the right moments, to labmates **Raghav, Dewang and Anika** (whose parallel
-cflib implementations at
-[Raghs-7/crazy-flies](https://github.com/Raghs-7/crazy-flies) were an
-invaluable reference and sanity check), and to the Bitcraze documentation
-and community, without which the AI-deck troubleshooting chapters of this
-repo would have taken far longer.
-
 — Kaustubh Sharma, IIIT-Delhi, July 2026
