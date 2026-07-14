@@ -1,6 +1,6 @@
 # Crazyflie 2.1+ Multi-Drone Control — Pure rclpy over LPS and AI-Deck Wi-Fi
 
-**Kaustubh Sharma** — Summer Research Intern, IRAS Hub (Lab B-419), IIIT-Delhi
+**Kaustubh Sharma** — Summer Research Intern, IRAS Hub (Robotics Lab), IIIT-Delhi
 Supervisor: **Prof. Sanjit Kaul** | May–July 2026
 B.Tech ECE (Advanced Communication Technology), JIIT Noida
 
@@ -9,7 +9,7 @@ B.Tech ECE (Advanced Communication Technology), JIIT Noida
 I am **Kaustubh Sharma**, a B.Tech student in Electronics & Communication
 Engineering (Advanced Communication Technology) at JIIT Noida. This
 repository is the complete record of my summer research internship at the
-**IRAS Hub, IIIT-Delhi (Lab B-419)**, May–July 2026, under the supervision
+**IRAS Hub, IIIT-Delhi**, May–July 2026, under the supervision
 of **Prof. Sanjit Kaul**.
 
 Over the internship I took a pair of Crazyflie 2.1+ nano-quadrotors from a
