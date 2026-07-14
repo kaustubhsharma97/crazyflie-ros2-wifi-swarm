@@ -58,8 +58,8 @@ in any flight code. The work spans three phases:
 | **Wi-Fi-only control (no Crazyradio)** | both drones connected via `tcp://<deck-ip>:5000` through Crazyswarm2's cflib backend; pose telemetry verified stable at 10 Hz |
 | Leader–follower over Wi-Fi | fixed-offset trailing, 3 selectable trajectories, watchdog failsafe (follower lands itself on leader loss), room safe-zone clamping |
 | Troubleshooting knowledge base | 10+ root-caused failures documented in [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
-![Circle tracking error analysis — real hardware](results/Real_Results_Latest/circle_trajectory_error_analysis.png)
 
+![Circle tracking error analysis — real hardware](results/Real_Results_Latest/circle_trajectory_error_analysis.png)
 ---
 
 ## Architecture (Phase 2)
