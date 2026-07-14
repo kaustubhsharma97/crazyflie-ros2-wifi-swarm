@@ -13,7 +13,7 @@ Wi-Fi credentials.
 
 ## 1. Install Ubuntu 22.04.5 LTS (Jammy Jellyfish) (dual boot with Windows)
 
-1. On Windows, download the **Ubuntu 22.04.x Desktop ISO** from ubuntu.com
+1. On Windows, download the **Ubuntu 22.04.5 Desktop ISO** from ubuntu.com
    and **balenaEtcher**. Flash the ISO to an 8 GB+ USB stick with Etcher.
 2. Free up disk space: Windows key → "Create and format hard disk
    partitions" → right-click your biggest partition → **Shrink Volume** →
