@@ -16,7 +16,7 @@ Over the internship I took a pair of Crazyflie 2.1+ nano-quadrotors from a
 single scripted takeoff to a full multi-drone system: seven autonomous
 trajectories flown on real hardware, a PID tuning study that reduced circle
 tracking error from 35 cm to 24 cm and identified the positioning-noise
-floor as the limiting factor, four two-drone swarm behaviors, a hand-guided
+floor as the limiting factor, five two-drone swarm behaviors, a hand-guided
 follow-me flight, and finally a complete migration of the control link from
 the Crazyradio dongle to the AI-deck's Wi-Fi — putting both drones under
 full ROS2 control over the lab network with no dongle in the loop, and
