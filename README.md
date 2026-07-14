@@ -13,7 +13,7 @@ repository is the complete record of my summer research internship at the
 of **Prof. Sanjit Kaul**.
 
 Over the internship I took a pair of Crazyflie 2.1+ nano-quadrotors from a
-single scripted takeoff to a full multi-drone system: seven autonomous
+single scripted takeoff to a full multi-drone system: eight autonomous
 trajectories flown on real hardware, a PID tuning study that reduced circle
 tracking error from 35 cm to 24 cm and identified the positioning-noise
 floor as the limiting factor, four two-drone swarm behaviors, a hand-guided
