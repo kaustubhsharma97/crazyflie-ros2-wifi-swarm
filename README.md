@@ -1,6 +1,6 @@
 # Crazyflie 2.1+ Multi-Drone Control — Pure rclpy over LPS and AI-Deck Wi-Fi
 
-**Kaustubh Sharma** — Summer Research Intern, IIIT-Delhi
+**Kaustubh Sharma** — Summer Research Intern, IRAS Hub (Lab B-419), IIIT-Delhi
 Supervisor: **Prof. Sanjit Kaul** | May–July 2026
 B.Tech ECE (Advanced Communication Technology), JIIT Noida
 
@@ -9,14 +9,14 @@ B.Tech ECE (Advanced Communication Technology), JIIT Noida
 I am **Kaustubh Sharma**, a B.Tech student in Electronics & Communication
 Engineering (Advanced Communication Technology) at JIIT Noida. This
 repository is the complete record of my summer research internship at the
-**IRAS Hub, IIIT-Delhi (Robotics Lab)**, May–July 2026, under the supervision
+**IRAS Hub, IIIT-Delhi (Lab B-419)**, May–July 2026, under the supervision
 of **Prof. Sanjit Kaul**.
 
 Over the internship I took a pair of Crazyflie 2.1+ nano-quadrotors from a
 single scripted takeoff to a full multi-drone system: seven autonomous
 trajectories flown on real hardware, a PID tuning study that reduced circle
 tracking error from 35 cm to 24 cm and identified the positioning-noise
-floor as the limiting factor, five two-drone swarm behaviors, a hand-guided
+floor as the limiting factor, four two-drone swarm behaviors, a hand-guided
 follow-me flight, and finally a complete migration of the control link from
 the Crazyradio dongle to the AI-deck's Wi-Fi — putting both drones under
 full ROS2 control over the lab network with no dongle in the loop, and
@@ -28,18 +28,18 @@ proving the ROS2-native path end to end. (Crazyswarm2's `backend:=cflib`
 launch option refers only to the server's low-level link layer; no flight
 script in this repository calls cflib.)
 
-Multi-drone control of Crazyflie 2.1+ quadrotors implemented **entirely in
-rclpy (ROS2 Humble) + crazyflie_interfaces** on top of Crazyswarm2 — no cflib
-in any flight code. The work spans three phases:
+The work spans three phases:
 
 * **Phase 0 — Single drone (LPS / Crazyradio):** seven autonomous
   trajectories (simple launch, circle, square, parabola, figure-8, hexagon,
   spiral), each flown in simulation and on real hardware, plus the circle
   PID tuning study (`circle_path_node.py` v1→v5 preserves the full tuning
   lineage: 35 cm → 24 cm mean error).
-* **Phase 1 — Two-drone swarm (LPS / Crazyradio):** single- and two-drone autonomous flight
-  using an 8-anchor UWB Loco Positioning System (TDoA2) with one shared
-  Crazyradio dongle.
+* **Phase 1 — Multi-agent LPS swarm:** five synchronized two-drone behaviors
+  over one shared Crazyradio (channel 80) on an 8-anchor UWB network, plus a
+  camera-less "follow-me" protocol using a hand-carried Crazyflie as an
+  active LPS tag, and empirically-derived guard grace periods that tolerate
+  EKF/UWB settling spikes instead of false-aborting on them.
 * **Phase 2 — AI-deck / Wi-Fi:** replacing the Crazyradio with the AI-deck's
   ESP32 Wi-Fi link, achieving **two drones under full ROS2 control over the
   lab Wi-Fi with no dongle anywhere in the loop**, and building a
@@ -60,6 +60,7 @@ in any flight code. The work spans three phases:
 | Troubleshooting knowledge base | 10+ root-caused failures documented in [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
 
 ![Circle tracking error analysis — real hardware](results/Real_Results_Latest/circle_trajectory_error_analysis.png)
+
 ---
 
 ## Architecture (Phase 2)
@@ -99,7 +100,25 @@ believing it moved 11.3 m in 1.9 s (≈ 6 m/s phantom velocity). Every
 positioning-free flight attempt confirmed this (3 controlled crashes).
 Bitcraze's own AI-deck Wi-Fi flight example likewise requires a positioning
 deck.
+
 ![Phantom drift of a stationary drone without positioning](docs/phantom_drift.png)
+
+## Simulation parity (`/sim`)
+
+Native multicopter Gazebo physics plugins crashed with multiple drone
+instances; the custom environment sidesteps this with a persistent-worker
+kinematic sim server (`cf_sim_server_swarm.py`) driving visual-only inline
+SDF models — keeping topic-level parity between the virtual world and the
+physical UWB-anchored lab, so every flight script runs unmodified in both.
+
+## Telemetry & error analysis
+
+Diagnostics are built in: flight scripts automatically dump runtime
+telemetry to CSV and generate multi-panel Matplotlib analysis PNGs
+(XY top-down, 3D trajectory, Z-variance, Euclidean error) on safe landing
+or keyboard interrupt. The `results/` folder contains the real-hardware
+logs and plots for every trajectory, the swarm behaviors, and follow-me,
+alongside their simulation counterparts.
 
 ## Repository layout
 
@@ -124,8 +143,6 @@ tools/                  find_decks.sh (AI-deck discovery + port probe),
                         use_single_drone.sh / use_swarm.sh (yaml switchers)
 docs/                   flight-day floor plans (2D/3D), phantom-drift figure,
                         flight runbook, PROJECT_NOTES.md (author's own notes)
-results/                real-hardware CSV logs + analysis plots (trajectories,
-                        swarm, follow-me) and their simulation counterparts
 ```
 
 ## Quickstart (Phase 2, dual-stack configuration)
@@ -190,5 +207,13 @@ His insistence on honest, measured results over comfortable claims taught
 me more about engineering discipline than any course has, and the standard
 he holds his lab to is one I will carry with me. It was a privilege to
 spend a summer building under his guidance at the IRAS Hub.
+
+Thanks also to my PhD mentor in the lab for hardware judgment at exactly
+the right moments, to labmates **Raghav, Dewang and Anika** (whose parallel
+cflib implementations at
+[Raghs-7/crazy-flies](https://github.com/Raghs-7/crazy-flies) were an
+invaluable reference and sanity check), and to the Bitcraze documentation
+and community, without which the AI-deck troubleshooting chapters of this
+repo would have taken far longer.
 
 — Kaustubh Sharma, IIIT-Delhi, July 2026
