@@ -75,8 +75,10 @@ So:
   firmware (or vice-versa) gives you a deck that enumerates and then never gets an
   interrupt — positioning silently dead.
 
-**Bottom line for the next student:** this is a small hardware-rework project, not a
-mounting exercise. Before touching a soldering iron: (1) re-check the live
+**Bottom line for the next student: an unmodified, off-the-shelf LPS deck will NOT
+work stacked with the AI-deck — physical soldering on the LPS deck is mandatory.**
+This is a small hardware-rework project, not a mounting exercise. Before touching a
+soldering iron: (1) re-check the live
 pin-allocation table at the link above (it changes), (2) search the Bitcraze forum
 for the current recommended Loco+AI pin assignment, (3) pick the alternate pins so
 they avoid IO1, the AI-deck's IO4 use, and UART2/CPX, (4) bridge the pads on the LPS
@@ -86,6 +88,14 @@ and only then mount.
 
 ### 0.3 Acceptance test for the stack (bench, props off)
 
+0. **Eyeball check first — the LEDs tell you immediately.** With the stack seated
+   and the drone powered, the **LPS deck's LED must glow on the top deck while the
+   AI-deck's LEDs are glowing below it at the same time.** Both lit together =
+   both decks are receiving power through the stacked headers. LPS LED dark while
+   the AI-deck is lit = the LPS deck isn't seated/powered through the pins (§0.1)
+   — do not bother launching cfclient yet. Note the LEDs only prove *power*, not
+   detection: a deck can light up and still fail the one-wire enumeration, so
+   step 1 remains the real gate.
 1. Power on → cfclient console must print **`2 deck(s) found`** listing **both**
    `bcDWM1000` and `bcAI`. Anything less: stop, it's mechanical/OW (§0.1).
 2. Console shows `Kalman (2)` and TDoA2 detected, **and** `got ip:` on the lab SSID
