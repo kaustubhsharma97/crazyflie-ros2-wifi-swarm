@@ -16,7 +16,7 @@ Over the internship I took a pair of Crazyflie 2.1+ nano-quadrotors from a
 single scripted takeoff to a full multi-drone system: eight autonomous
 trajectories flown on real hardware, a PID tuning study that reduced circle
 tracking error from 35 cm to 24 cm and identified the positioning-noise
-floor as the limiting factor, four two-drone swarm behaviors, a hand-guided
+floor as the limiting factor, five two-drone swarm behaviors, a hand-guided
 follow-me flight, and finally a complete migration of the control link from
 the Crazyradio dongle to the AI-deck's Wi-Fi — putting both drones under
 full ROS2 control over the lab network with no dongle in the loop, and
@@ -189,15 +189,24 @@ Full procedure, gates, and tape-mark placement: `docs/FLIGHT_RUNBOOK.md`.
 
 Working and verified on hardware: everything through two-drone Wi-Fi control
 (pose at 10 Hz on both drones, commands over TCP, motors responding).
-Flight of the final dual-stack configuration is pending one hardware item:
-**LPS + AI-deck stacking requires custom long pin headers** (the LPS deck did
-not enumerate when stacked with the available headers). Fabrication in the
-ECE lab was scoped but deferred for time/risk. The moment stacking works
-(or Flow decks are approved), the quickstart above flies unchanged.
+Flight of the final dual-stack configuration is pending a hardware rework,
+not just parts: **an unmodified LPS deck cannot be stacked with the AI-deck.**
+Two independent problems exist — (a) mechanically, the LPS deck did not
+enumerate with the headers available in the lab (proper long-pin headers /
+ECE-lab fabrication scoped, deferred for time/risk), and (b) electrically,
+both decks claim **IO1** (DW1000 IRQ vs. GAP8 BOOT strap); Bitcraze's own
+deck-compatibility matrix marks Loco + AI as *"with a patch or workaround it
+is possible"*, i.e. **solder rework on the LPS deck's alternate pads plus a
+matching alt-pin firmware build** is required. Full conditions, pin table,
+acceptance test and fallbacks: `docs/FLIGHT_RUNBOOK.md` §0. Once the stack
+passes that acceptance test (or Flow decks are approved), the quickstart
+above flies unchanged.
 
 ## Future work
 
-1. Fabricate/procure stacking headers → fly the dual-Wi-Fi configuration.
+1. Complete the dual-stack rework (long-pin headers **+** LPS-deck solder
+   bridges **+** alt-pin firmware build — see `docs/FLIGHT_RUNBOOK.md` §0)
+   → fly the dual-Wi-Fi configuration.
 2. Option B: true deck-to-deck comms (custom ESP32 firmware; the stock
    aideck-esp-firmware only runs a TCP *server* — it never initiates
    peer connections).
