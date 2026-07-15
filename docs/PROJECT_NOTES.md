@@ -1,5 +1,12 @@
 # Crazyflie 2.1+ Trajectory & Swarm Control — Pure rclpy / ROS2
 
+> **Historical notes.** This file preserves the author's working notes as
+> written during the internship. The repository layout it references
+> predates the `phase0/phase1/phase2` reorganisation, and some hardware
+> findings here were later superseded — for the current layout see
+> `README.md`; for the LPS + AI-deck stacking conditions see
+> `docs/FLIGHT_RUNBOOK.md` §0.
+
 Autonomous single-drone trajectory tracking and two-drone swarm behaviours for
 Crazyflie 2.1+ nano-quadcopters, implemented in **pure `rclpy` + `crazyflie_interfaces`
 — no `cflib` in any flight script**. Developed during a summer research internship at

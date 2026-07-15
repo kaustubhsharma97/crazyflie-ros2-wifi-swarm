@@ -220,6 +220,12 @@ The deck serves **one TCP client at a time**: power-cycle drones before
 every server launch. `tools/find_decks.sh` finds each deck's current IP by
 MAC (no router admin needed).
 
+⚠ **Do not stack an LPS deck with an AI-deck as-is.** An unmodified LPS
+deck will not work above the AI-deck — the decks conflict on IO1 and the
+combo needs long-pin headers **plus** solder rework on the LPS deck and an
+alt-pin firmware build. Read `docs/FLIGHT_RUNBOOK.md` §0 before mounting
+anything; it also lists the working fallback configurations.
+
 **The estimator:** with a positioning deck present the firmware runs its
 EKF, fusing IMU + position measurements into the state estimate that
 `/cfX/pose` publishes and the position controller consumes. The PID gains
