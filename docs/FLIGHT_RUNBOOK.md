@@ -119,6 +119,28 @@ Pass all three → continue to the Gates below exactly as written.
 
 ---
 
+## Standard flight session — terminal layout
+
+**Step 1 — pick the configuration** (run from the repo root; the switcher
+copies the right yaml into both the `src` and `install` trees of crazyswarm2):
+
+```bash
+bash tools/use_single_drone.sh   # single drone (cf231 only)
+bash tools/use_swarm.sh          # two drones (cf231 + cf2)
+```
+
+**Step 2 — every flight is exactly THREE terminals, opened in this order:**
+
+| Terminal | Purpose | Command |
+|---|---|---|
+| 1 — Server | Crazyswarm2 server (cflib backend required for tcp://) | `ros2 launch crazyflie launch.py backend:=cflib mocap:=False` |
+| 2 — Mission | the flight script for today's ladder step | `python3 <script>.py --ros-args -p ...` |
+| 3 — Kill switch | **typed BEFORE takeoff, Enter only in an emergency** | `ros2 service call /all/emergency std_srvs/srv/Empty` |
+
+**Diagnostics tool:** `cfclient` (GUI) — used *before* the server, never
+alongside it. One-client rule: disconnect cfclient, then power-cycle the
+drones (Wi-Fi decks) before launching the server in Terminal 1.
+
 ## Prereqs (once the stack passes §0.3)
 
 Both drones with LPS + AI-deck mounted per §0.1, 8 anchors powered,
