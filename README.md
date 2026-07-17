@@ -111,8 +111,10 @@ ROS 2 Humble installation, a one-page ROS 2 crash course built around this
 repo's exact patterns, Crazyswarm2 workspace setup, firmware toolchain,
 the hardware explained (LPS, AI-deck, CPX, why positioning is mandatory),
 simulation setup, a week-by-week learning path through the code, and a
-glossary. Combined with [TROUBLESHOOTING.md](TROUBLESHOOTING.md) and
-[docs/FLIGHT_RUNBOOK.md](docs/FLIGHT_RUNBOOK.md), this repository is a
+glossary. Combined with [TROUBLESHOOTING.md](TROUBLESHOOTING.md),
+[docs/FLIGHT_RUNBOOK.md] (docs/FLIGHT_RUNBOOK.md) and
+[docs/ASSEMBLY.md]
+(docs/ASSEMBLY.md), this repository is a
 self-contained onboarding for whoever continues the work.
 
 ## Simulation parity (`/sim`)
