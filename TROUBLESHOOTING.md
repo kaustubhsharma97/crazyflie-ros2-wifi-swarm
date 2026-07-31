@@ -123,14 +123,31 @@ safe-zone clamping from the anchor geometry, landing to `home_z + 0.03`
 * **+8 cm Y-bias** in the high-Y room region (suspected anchor geometry) —
   characterize with `static_check.py` before trusting millimeters there.
 
-## 9. LPS + AI-deck stacking (open hardware item)
+## 9. LPS + AI-deck stacking (open hardware item — rework required)
 
-With the standard headers available in the lab, the LPS deck does not
-enumerate when stacked with the AI-deck — the project's final blocker.
-Custom long pin headers (ECE lab fabrication) were scoped but deferred for
-time and hardware-risk reasons. The AI-deck itself ships with long pins
-and officially supports bottom mounting; the correct target stack is
-**LPS on top (UWB antenna clear), AI-deck underneath**.
+**Symptom:** stacked LPS + AI-deck → cfclient never prints `bcDWM1000`; the
+LPS deck is invisible to the firmware.
+**Root cause(s) — there are two, and fixing only the first is not enough:**
+
+1. *Mechanical:* with the headers available in the lab the LPS deck's pins
+   (including the one-wire detection pin) do not seat through the stack, so
+   deck detection fails silently at boot. Proper Bitcraze long-pin headers
+   or ECE-lab fabricated equivalents are required (scoped, deferred for
+   time/risk). Quick check: the **LPS deck's LED should glow on top while
+   the AI-deck LEDs glow below** — LED dark = not even powered through the
+   pins. (LEDs prove power only, not enumeration.)
+2. *Electrical:* even with perfect pins, **unmodified decks conflict on
+   IO1** — the LPS DW1000 IRQ and the AI-deck's GAP8 BOOT strap share it.
+   Bitcraze's deck-compatibility matrix rates Loco + AI as *"with a patch
+   or workaround it is possible"*, not "yes". The LPS deck must be
+   **solder-bridged to its alternate IRQ/RST pads**, chosen to avoid the
+   AI-deck's IO4 use and the CPX UART2 pins, and the STM32 firmware must be
+   rebuilt with the matching Loco alternate-pin config.
+
+**Fix / procedure, acceptance test, and fallbacks:** `docs/FLIGHT_RUNBOOK.md`
+§0 (single authority for the stack rework). Target arrangement remains
+**LPS on top (UWB antenna clear), AI-deck underneath**. Reference:
+<https://www.bitcraze.io/documentation/system/platform/cf2-expansiondecks/>
 
 ## 10. Toolchain gotchas (Ubuntu 22.04)
 
